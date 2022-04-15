@@ -9,8 +9,6 @@ from walker import Walker
 
 
 class App:
-    BACKGROUND_COLOR = (15, 15, 15)
-
     def __init__(self):
         self._running = True
         self._display_surf = None
@@ -31,7 +29,6 @@ class App:
         self._walker.on_loop()
 
     def on_render(self):
-        # self._display_surf.fill(self.BACKGROUND_COLOR)
         self._walker.on_render()
         pygame.display.update()
 
