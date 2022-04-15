@@ -64,7 +64,6 @@ class Rocket:
         self.fit = 1 / min_distance
 
         if self.completed is True:
-            print(f"Completed: {self.fit} * 2 * {self.dna.LIFE_SPAN} / {self.completed_time} ({self.dna.LIFE_SPAN / self.completed_time})")
             self.fit *= 2 * (self.dna.LIFE_SPAN / self.completed_time)
 
         if self.crashed is True:

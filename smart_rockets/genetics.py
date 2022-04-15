@@ -51,7 +51,6 @@ class Genetics:
             self._population.selection()
             self.life_span_count = 0
             self.population_count += 1
-            print(f"New Population: {self.population_count}")
 
     def on_render(self) -> None:
         self._population.on_render()
@@ -103,7 +102,6 @@ class Population:
             f = each_rocket.fitness(targets=self._targets)
             if f > max_fitness:
                 max_fitness = f
-        print(f"Max Fitness: {max_fitness}")
 
         # normalize fitness
         for each_rocket in self.rockets:
