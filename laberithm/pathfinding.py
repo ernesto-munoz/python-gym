@@ -87,15 +87,12 @@ class AStar:
             # remove this from the open node list
             self._open_nodes.remove(minimum_open_node)
             self._closed_nodes.append(minimum_open_node)
-            # print(f"Selected node: {minimum_open_node}")
 
             # generate select nodes successors
             successors_nodes = minimum_open_node.get_successors()
 
             for each_successor_node in successors_nodes:
-                # print(f"Successor node: {each_successor_node}")
                 if each_successor_node == goal_node:
-                    print("Found Solution!")
                     self._goal_node = each_successor_node  # this node already has the information of the parent
                     return True
 
@@ -122,7 +119,6 @@ class AStar:
                     # this node is not final but may be a solution node, add it to the open nodes list
                     self._open_nodes.append(each_successor_node)
 
-        print("No solution found.")
         return False
 
     def backtracking(self) -> list:

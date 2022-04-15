@@ -20,7 +20,6 @@ class App:
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
 
-        # self._lab = Laberithm(maze_image_path="laberithm\\maze.png")
         self._lab = Laberithm(rows=128, columns=128)
 
     def event(self, event):
