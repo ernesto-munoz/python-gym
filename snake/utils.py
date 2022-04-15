@@ -76,7 +76,6 @@ class AStar:
                     # this node is not final but may be a solution node, add it to the open nodes list
                     self._open_nodes.append(each_successor_node)
 
-        print("No solution found.")
         return False
 
     def backtracking(self) -> list:

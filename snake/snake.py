@@ -223,7 +223,6 @@ class Snake:
 
                 # if the new head is wall or snake, finished
                 if self.tabletop[new_snake_head[0]][new_snake_head[1]] in [TileType.WALL, TileType.SNAKE]:
-                    print("Finished.")
                     self.is_snake_alive = False
                     return
 
@@ -234,7 +233,6 @@ class Snake:
                     self._create_new_food()
                     self._food_score += 1
                     self._snake_body_speed_time *= 0.9
-                    print(f"Score: {self._food_score}")
 
                 # add the new head to the snake body
                 self._snake_body.append(new_snake_head)
