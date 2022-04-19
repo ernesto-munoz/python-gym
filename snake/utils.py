@@ -28,7 +28,7 @@ class AStar:
 
     def set_starting_node(self, node: AStarNode) -> None:
         if len(self._open_nodes) > 0:
-            raise("Trying to set the starting node when the Open List is not empty")
+            raise "Trying to set the starting node when the Open List is not empty"
 
         self._start_node = node
         self._open_nodes.append(node)

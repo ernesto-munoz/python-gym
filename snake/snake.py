@@ -1,6 +1,5 @@
 import random
 import time
-from tkinter import font
 import pygame
 
 from enum import Enum
@@ -93,6 +92,9 @@ class Snake:
         self._target_sceen = pygame.Surface((self._w, self._h))
 
         # initialize the variables of the game
+        self._new_direction = None
+        self.is_snake_alive = None
+        self._snake_body_time_interval = None
         self._init_game()
 
     def get_score(self) -> int:
@@ -125,7 +127,8 @@ class Snake:
         # snake body
         self.is_snake_alive = True
         self._new_direction = None
-        self._snake_body = [(int(self.rows / 2) - 1, int(self.columns / 2)), (int(self.rows / 2), int(self.columns / 2))]  # center
+        self._snake_body = [(int(self.rows / 2) - 1, int(self.columns / 2)),
+                            (int(self.rows / 2), int(self.columns / 2))]  # center
         self._update_snake_to_tabletop()
 
         # loop time
@@ -133,7 +136,7 @@ class Snake:
         self._snake_body_speed_time = 0.1
 
     def _update_snake_to_tabletop(self) -> None:
-        """ Update the position in the table top with the positions in the body of the snake"""
+        """ Update the position in the table-top with the positions in the body of the snake"""
         for r in range(self.rows):
             for c in range(self.columns):
                 if self.tabletop[r][c] == TileType.SNAKE:
@@ -145,7 +148,8 @@ class Snake:
 
     def _create_new_food(self) -> None:
         """ Create a new food and update the tabletop with this new position"""
-        available_spots = [(r, c) for r in range(self.rows) for c in range(self.columns) if self.tabletop[r][c] == TileType.EMPTY]
+        available_spots = [(r, c) for r in range(self.rows) for c in range(self.columns)
+                           if self.tabletop[r][c] == TileType.EMPTY]
         self._food_position = random.choice(available_spots)
         self.tabletop[self._food_position[0]][self._food_position[1]] = TileType.FOOD
 
@@ -167,11 +171,11 @@ class Snake:
         """ Get the new direction that the snake must move"""
         path = self._solve()
         if len(path) == 0:
-            return None
+            return ()
         snake_head = self._snake_body[-1]
         new_snake_head = (path[-2].x, path[-2].y)
 
-        return (new_snake_head[0] - snake_head[0], new_snake_head[1] - snake_head[1])
+        return new_snake_head[0] - snake_head[0], new_snake_head[1] - snake_head[1]
 
     def event(self, event) -> None:
         """ Event loop:
@@ -185,7 +189,7 @@ class Snake:
             if event.key == pygame.K_r:
                 self._init_game()
 
-            if self._automatic == False:
+            if self._automatic is False:
                 if event.key == pygame.K_UP:
                     self._new_direction = Direction.UP.value
                 if event.key == pygame.K_DOWN:
@@ -203,7 +207,7 @@ class Snake:
                 # calculate an input by ia if automatic mode is on
                 if self._automatic is True:
                     self._new_direction = self._get_automatic_new_direction()
-                    if self._new_direction is None:
+                    if not self._new_direction:
                         self.is_snake_alive = False
                         return
 
@@ -239,7 +243,7 @@ class Snake:
                 self._update_snake_to_tabletop()
                 self._snake_body_time_interval = time.time()
 
-    def render(self) -> None:
+    def render(self) -> pygame.surface:
         for r in range(self.rows):
             for c in range(self.columns):
                 rect = pygame.Rect(
@@ -255,6 +259,7 @@ class Snake:
     def cleanup(self) -> None:
         pass
 
-    def _maprange(self, v, a, b) -> float:
+    @staticmethod
+    def _maprange(v, a, b) -> float:
         (a1, a2), (b1, b2) = a, b
         return b1 + ((v - a1) * (b2 - b1) / (a2 - a1))

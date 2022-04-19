@@ -1,9 +1,5 @@
-import time
-
-import numpy as np
-
 import pygame
-from pygame.locals import *
+
 
 from snake import Snake
 
@@ -52,7 +48,7 @@ class App:
 
     def execute(self):
 
-        while(self._running):
+        while self._running is True:
             for event in pygame.event.get():
                 self.event(event)
             self.loop()
