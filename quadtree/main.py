@@ -27,7 +27,7 @@ class App:
         self._quadtree = Quadtree(Rectangle(self.weight // 2, self.height // 2, self.weight // 2, self.height // 2))
 
         self.query_rectangle = Rectangle(0, 0, 0, 0)
-        self._query_points = self._quadtree.query(range=self.query_rectangle)
+        self._query_points = self._quadtree.query(place=self.query_rectangle)
         self._query_rectangle_start = None
 
     def event(self, event):
@@ -39,7 +39,7 @@ class App:
 
             if pressed_keys[pygame.K_i] is True:
                 self._quadtree.insert(Point(event.pos[0], event.pos[1]))
-                self._query_points = self._quadtree.query(range=self.query_rectangle)
+                self._query_points = self._quadtree.query(place=self.query_rectangle)
             else:
                 self._query_rectangle_start = event.pos
 
@@ -56,17 +56,17 @@ class App:
 
         if event.type == pygame.MOUSEBUTTONUP and self._query_rectangle_start is not None:
             self._query_rectangle_start = None
-            self._query_points = self._quadtree.query(range=self.query_rectangle)
+            self._query_points = self._quadtree.query(place=self.query_rectangle)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 self._quadtree = Quadtree(Rectangle(self.weight // 2, self.height // 2, self.weight // 2, self.height // 2))
-                self._query_points = self._quadtree.query(range=self.query_rectangle)
+                self._query_points = self._quadtree.query(place=self.query_rectangle)
 
             if event.key == pygame.K_a:
                 for i in range(100):
                     self._quadtree.insert(Point(random.randint(0, self.weight), random.randint(0, self.height)))
-                self._query_points = self._quadtree.query(range=self.query_rectangle)
+                self._query_points = self._quadtree.query(place=self.query_rectangle)
 
     def loop(self):
         self._quadtree.loop()
@@ -93,7 +93,7 @@ class App:
 
     def execute(self):
 
-        while(self._running):
+        while self._running is True:
             for event in pygame.event.get():
                 self.event(event)
             self.loop()

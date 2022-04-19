@@ -1,10 +1,5 @@
-import random
-import time
 from dataclasses import dataclass
-from turtle import width
 import pygame
-
-from enum import Enum
 
 
 @dataclass
@@ -86,25 +81,29 @@ class Quadtree:
         width = self._boundary.width
         height = self._boundary.height
 
-        self._north_west = Quadtree(boundary=Rectangle(x - width / 2, y - height / 2, width / 2, height / 2), capacity=self._capacity)
-        self._north_east = Quadtree(boundary=Rectangle(x + width / 2, y - height / 2, width / 2, height / 2), capacity=self._capacity)
-        self._south_west = Quadtree(boundary=Rectangle(x - width / 2, y + height / 2, width / 2, height / 2), capacity=self._capacity)
-        self._south_east = Quadtree(boundary=Rectangle(x + width / 2, y + height / 2, width / 2, height / 2), capacity=self._capacity)
+        self._north_west = Quadtree(boundary=Rectangle(x - width / 2, y - height / 2, width / 2, height / 2),
+                                    capacity=self._capacity)
+        self._north_east = Quadtree(boundary=Rectangle(x + width / 2, y - height / 2, width / 2, height / 2),
+                                    capacity=self._capacity)
+        self._south_west = Quadtree(boundary=Rectangle(x - width / 2, y + height / 2, width / 2, height / 2),
+                                    capacity=self._capacity)
+        self._south_east = Quadtree(boundary=Rectangle(x + width / 2, y + height / 2, width / 2, height / 2),
+                                    capacity=self._capacity)
         self._is_subdivided = True
 
-    def query(self, range):
+    def query(self, place: Rectangle):
         found_points = list()
-        if self._boundary.intersects(range) is False:
+        if self._boundary.intersects(place) is False:
             return found_points
 
         for each_point in self._points:
-            if range.contains(each_point) is True:
+            if place.contains(each_point) is True:
                 found_points.append(each_point)
 
         if self._is_subdivided is True:
-            found_points.extend(self._north_west.query(range=range))
-            found_points.extend(self._north_east.query(range=range))
-            found_points.extend(self._south_west.query(range=range))
-            found_points.extend(self._south_east.query(range=range))
+            found_points.extend(self._north_west.query(place=place))
+            found_points.extend(self._north_east.query(place=place))
+            found_points.extend(self._south_west.query(place=place))
+            found_points.extend(self._south_east.query(place=place))
 
         return found_points
