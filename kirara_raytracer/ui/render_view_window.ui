@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RenderViewWindow</class>
+ <widget class="QMainWindow" name="RenderViewWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1197</width>
+    <height>706</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Render View</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,40,0">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,10,0,0,0,0,0">
+        <item>
+         <widget class="QPushButton" name="camera_parameters_button">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="render_view_window.qrc">
+            <normaloff>:/images/resources/camera_icon.png</normaloff>:/images/resources/camera_icon.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="resolution_combo_box">
+          <item>
+           <property name="text">
+            <string>Custom</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>854 - 480</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1024 - 576</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1280 - 720</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1920 - 1080</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2560 - 1440</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="resolution_width_line">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>64</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="x_label">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>x</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="resolution_height_line">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>64</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="render_button">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="render_view_window.qrc">
+            <normaloff>:/images/resources/icons8-play-64.png</normaloff>:/images/resources/icons8-play-64.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="ViewportGraphicsView" name="viewport_graphics_view"/>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="render_progress_bar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menu_bar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1197</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="status_bar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ViewportGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>viewport_graphics_view.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="render_view_window.qrc"/>
+ </resources>
+ <connections/>
+</ui>
