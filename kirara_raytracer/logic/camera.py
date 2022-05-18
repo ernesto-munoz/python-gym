@@ -5,6 +5,8 @@ from .ray import Ray
 
 class Camera:
     _position: vec3 = vec3(0.0, 0.0, 0.0)
+    _look_at: vec3 = vec3(0.0, 0.0, -1.0)
+    _up: vec3 = vec3(0.0, 1.0, 0.0)
     _vertical_field_of_view: float
     _aspect_ratio: float
     _focal_length: float = 1.0
@@ -28,6 +30,7 @@ class Camera:
     @position.setter
     def position(self, value: vec3):
         self._position = value
+        self._calculate_camera_parameters()
 
     @property
     def aspect_ratio(self) -> float:
@@ -57,6 +60,24 @@ class Camera:
     def vertical_field_of_view(self, value: float):
         self._vertical_field_of_view = value
         self._calculate_camera_parameters()
+        
+    @property
+    def look_at(self) -> vec3:
+        return self._look_at
+    
+    @look_at.setter
+    def look_at(self, value: vec3):
+        self._look_at = value
+        self._calculate_camera_parameters()
+        
+    @property
+    def up(self) -> vec3:
+        return self._up
+    
+    @up.setter
+    def up(self, value: vec3):
+        self._up = value
+        self._calculate_camera_parameters()
 
     def get_ray(self, u: c_float, v: c_float):
         """ Creates a Ray between the camera and the point indicated by the u and v parameters in the viewport.
@@ -72,10 +93,13 @@ class Camera:
         of the camera, half the width, half the height and the distance between the position
         and the viewport (the near plane)
         """
+        w = glm.normalize(self._position - self._look_at)
+        u = glm.normalize(glm.cross(self._up, w))
+        v = glm.cross(w, u)
         theta = glm.radians(self._vertical_field_of_view)
         self._viewport_height = glm.tan(theta / 2) * 2.0
         self._viewport_width = self._aspect_ratio * self._viewport_height
-        self._horizontal = vec3(self._viewport_width, 0.0, 0.0)
-        self._vertical = vec3(0.0, self._viewport_height, 0.0)
+        self._horizontal = vec3(self._viewport_width, 0.0, 0.0) * u
+        self._vertical = vec3(0.0, self._viewport_height, 0.0) * v
         self._lower_left_corner = self._position - self._horizontal / 2 - self._vertical / 2 - vec3(0.0, 0.0,
                                                                                                     self._focal_length)
